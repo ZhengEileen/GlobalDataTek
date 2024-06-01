@@ -1,4 +1,4 @@
-package JavaAssignment;
+package Assignment2;
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -6,6 +6,7 @@ import java.util.Scanner;
 public class Assignment2 {
 
     public static void main(String[] args) {
+    	
         Scanner UserInput = new Scanner(System.in);
         System.out.println("Hi, Please enter your name:");
         String UserName = UserInput.nextLine();
@@ -15,45 +16,42 @@ public class Assignment2 {
         int NumberTasks = todoManager.NumberTasks();
         String[] tasks = todoManager.GetTask(NumberTasks);
 
-        int choice = -1;
+        int OptionChoice = -10;
 
-        while (choice != 0) {
-            System.out.println("\nMenu:");
-            System.out.println("1. Add the task.");
+        while (OptionChoice != 0) {
+            System.out.println("Here are the operations you can perform: ");
+            
+            System.out.println("1. Add more task.");
             System.out.println("2. Update the task.");
             System.out.println("3. Delete the task.");
             System.out.println("4. Search a task from the history.");
             System.out.println("5. Arrange the tasks.");
             System.out.println("6. Check the repeated tasks.");
             System.out.println("0. Exit");
-            System.out.print("Please enter the option number to continue: ");
-            choice = UserInput.nextInt();
-            UserInput.nextLine(); // Consume the newline
+            System.out.println("Please enter the option number to continue: ");
+            
+            OptionChoice = UserInput.nextInt();
+            UserInput.nextLine(); 
 
-            switch (choice) {
-                case 1:
-                    tasks = todoManager.AddTask(tasks);
-                    break;
-                case 2:
-                    tasks = todoManager.UpdateTask(tasks);
-                    break;
-                case 3:
-                    tasks = todoManager.DeleteTask(tasks);
-                    break;
-                case 4:
-                    todoManager.SearchTask(tasks);
-                    break;
-                case 5:
-                    todoManager.ReOrder(tasks);
-                    break;
-                case 6:
-                    todoManager.checkRepeated(tasks);
-                    break;
-                case 0:
-                    System.out.println("Bye Bye.");
-                    break;
+            if (OptionChoice == 1) {
+                tasks = todoManager.AddTask(tasks);
+            } else if (OptionChoice == 2) {
+                tasks = todoManager.UpdateTask(tasks);
+            } else if (OptionChoice == 3) {
+                tasks = todoManager.DeleteTask(tasks);
+            } else if (OptionChoice == 4) {
+                todoManager.SearchTask(tasks);
+            } else if (OptionChoice == 5) {
+                todoManager.ReOrder(tasks);
+            } else if (OptionChoice == 6) {
+                todoManager.checkRepeated(tasks);
+            } else if (OptionChoice != 0) {
+            	System.out.println("Invalid option number, please try again.");
             }
+
         }
+        
+        System.out.println("Bye Bye.");
 
         UserInput.close();
     }
@@ -180,7 +178,7 @@ class TodoManager {
 
         for (int i = 0; i < tasks.length; i++) {
             if (tasks[i].contains(keyword)) {
-                System.out.println("Task Found. No. " + (i + 1) + ". " + tasks[i]);
+                System.out.println("Task Found. No. " + (i + 1) + "Task " + tasks[i]);
                 found = true;
             }
         }
@@ -236,6 +234,4 @@ class TodoManager {
         }
     }
 }
-
-
 
