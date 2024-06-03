@@ -25,14 +25,9 @@ public class daotask {
     }
     
     public void AddTask(String TaskTitle, String TaskText, String assignedTo) {
-        if (TaskCount >= Tasks.length) {
-            System.out.println("Task list is full.");
-            return;
-        }
         int TaskId = GenerateTaskId();
         task NewTask = new task(TaskId, TaskTitle, TaskText, assignedTo);
         Tasks[TaskCount++] = NewTask;
-        System.out.println("Task added successfully with ID: " + TaskId);
     }
     
     public task[] GetTasks() {
