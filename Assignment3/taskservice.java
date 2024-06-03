@@ -63,6 +63,7 @@ public class taskservice {
                 String assignedTo = UserInput.nextLine();
                 
                 Dao.AddTask(NewTaskTitle, NewTaskText, assignedTo);
+                System.out.println("Task added successfully with ID: " + TaskId);
             
                 System.out.println("Would you like to add a new task to your daily tasks?");
                 System.out.println("Type \"yes\" or \"Yes\" if you want to.");
