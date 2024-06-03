@@ -5,7 +5,8 @@ import java.util.Scanner;
 public class Main {
 	
 	public static void main(String[] args) {
-		Scanner UserInput = new Scanner(System.in);
+	
+	Scanner UserInput = new Scanner(System.in);
         taskservice taskService = new taskservice(100);
         
         taskService.Greeting();
