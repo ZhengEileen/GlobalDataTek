@@ -4,196 +4,195 @@ import java.util.Scanner;
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class taskservice {
+public class taskService {
+	
+	private Scanner userInput;
+    private taskDao dao;
     
-    private Scanner UserInput;
-    private daotask Dao;
-    
-    public taskservice(int size) {
-        UserInput = new Scanner(System.in);
-        Dao = new daotask(size);
+    public taskService(int size) {
+    	userInput = new Scanner(System.in);
+    	dao = new taskDao(size);
     }
-    
-    public void Greeting() {
+	
+	public void greeting() {
         System.out.println("Hi, Please enter your name:");
-        String UserName = UserInput.nextLine();
-        System.out.println("Hi " + UserName + " :)");
-    }
-    
-    public int NumberTasks() {
+        String userName = userInput.nextLine();
+        System.out.println("Hi " + userName + " :)");
+	}
+	
+	public int numberTasks() {
         System.out.println("How many tasks would you like to accomplish today?");
-        int Number = UserInput.nextInt();
-        UserInput.nextLine();
-        return Number;
+        int number = userInput.nextInt();
+        userInput.nextLine();
+        return number;
     }
-    
-    public String[] GetTask(int NumberTasks) {
-        System.out.println("Please type your " + NumberTasks + " tasks for today, each task should end with a period:");
-        String temp = UserInput.nextLine();
+	
+	public String[] getTask(int numberTasks) {
+        System.out.println("Please type your " + numberTasks + " tasks for today, each task should end with a period:");
+        String temp = userInput.nextLine();
         String[] tasks = temp.split("\\.");
         return tasks;
     }
-    
-    private void ShowTask() {
-        task[] tasks = Dao.GetTasks();
-        for (task t : tasks) {
-            System.out.println("ID: " + t.GetTaskId() + " " + t.GetTaskTitle());
+	
+	private void showTasks() {
+        task[] tasks = dao.getTasks();
+		for (task t : tasks) {
+            System.out.println("ID: " + t.getTaskId() + " " + t.getTaskTitle());
         }
+	}
+	
+	private task getTaskById(int taskId) {
+        return dao.getTaskById(taskId);
     }
-    
-    private task GetTaskById(int TaskId) {
-        return Dao.GetTaskById(TaskId);
-    }
-    
-    public void AddTask() {
-        System.out.println("Would you like to add a new task to your daily tasks?");
+	
+	public void addTask() {
+		System.out.println("Would you like to add a new task to your daily tasks?");
         System.out.println("Type \"yes\" or \"Yes\" if you want to.");
         System.out.println("Type \"finish\" or \"Finish\" if you have finished adding your tasks.");
-        String UserDecision = UserInput.nextLine();
+        String userDecision = userInput.nextLine();
         
-        while (!UserDecision.equalsIgnoreCase("finish")) {
-            if (UserDecision.equalsIgnoreCase("yes")) {
+        while (!userDecision.equalsIgnoreCase("finish")) {
+            if (userDecision.equalsIgnoreCase("yes")) {
                 System.out.println("Please type your new task title below.");
-                String NewTaskTitle = UserInput.nextLine();
+                String newTaskTitle = userInput.nextLine();
                 
                 System.out.println("Please type your new task text below.");
-                String NewTaskText = UserInput.nextLine();
+                String newTaskText = userInput.nextLine();
                 
                 System.out.println("Please type who the task is assigned to below.");
-                String assignedTo = UserInput.nextLine();
+                String assignedTo = userInput.nextLine();
                 
-                Dao.AddTask(NewTaskTitle, NewTaskText, assignedTo);
-                System.out.println("Task added successfully with ID: " + TaskId);
+                dao.addTask(newTaskTitle, newTaskText, assignedTo);
             
                 System.out.println("Would you like to add a new task to your daily tasks?");
                 System.out.println("Type \"yes\" or \"Yes\" if you want to.");
                 System.out.println("Type \"finish\" or \"Finish\" if you have finished adding your tasks.");
-                UserDecision = UserInput.nextLine();
+                userDecision = userInput.nextLine();
             }
         }
     }
-    
-    public void UpdateTask() {
+	
+	public void updateTask() {
         System.out.println("The following are your current tasks:");
-        ShowTask();
+        showTasks();
 
         System.out.println("Please enter the task ID of the task you want to update:");
         System.out.println("Type \"-1\" if you have finished updating your tasks.");
-        int TaskId = UserInput.nextInt();
-        UserInput.nextLine(); 
+        int taskId = userInput.nextInt();
+        userInput.nextLine(); 
 
-        while (TaskId != -1) {
-            task UpdateTask = GetTaskById(TaskId);
-            if (UpdateTask != null) {
-                System.out.println("Please enter the new task title for Task " + TaskId + " :");
-                String NewTaskTitle = UserInput.nextLine();
-                System.out.println("Please enter the new task text for Task " + TaskId + " :");
-                String NewTaskText = UserInput.nextLine();
-                System.out.println("Please enter the new assigned to for Task " + TaskId + " :");
-                String assignedTo = UserInput.nextLine();
-                Dao.UpdateTask(TaskId, NewTaskTitle, NewTaskText, assignedTo);
-                System.out.println("No. " + TaskId + " Task updated successfully!");
+        while (taskId != -1) {
+            task updateTask = getTaskById(taskId);
+            if (updateTask != null) {
+                System.out.println("Please enter the new task title for Task " + taskId + " :");
+                String newTaskTitle = userInput.nextLine();
+                System.out.println("Please enter the new task text for Task " + taskId + " :");
+                String newTaskText = userInput.nextLine();
+                System.out.println("Please enter the new assigned to for Task " + taskId + " :");
+                String assignedTo = userInput.nextLine();
+                dao.updateTask(taskId, newTaskTitle, newTaskText, assignedTo);
+                System.out.println("No. " + taskId + " Task updated successfully!");
             } else {
                 System.out.println("Task not found.");
             }
 
             System.out.println("The following are your current tasks:");
-            ShowTask();
+            showTasks();
 
             System.out.println("Please enter the task ID of the task you want to update:");
             System.out.println("Type \"-1\" if you have finished updating your tasks.");
-            TaskId = UserInput.nextInt();
-            UserInput.nextLine();
+            taskId = userInput.nextInt();
+            userInput.nextLine();
         }
     }
-    
-    public void DeleteTask() {
+	
+	public void deleteTask() {
         System.out.println("The following are your current tasks:");
-        ShowTask();
+        showTasks();
         
         System.out.println("Please enter the task ID of the task you want to delete:");
         System.out.println("Type \"-1\" if you have finished deleting tasks.");
-        int TaskId = UserInput.nextInt();
-        UserInput.nextLine();
+        int taskId = userInput.nextInt();
+        userInput.nextLine();
         
-        while (TaskId != -1) {
-            if (Dao.DeleteTask(TaskId)) {
-                System.out.println("No. " + TaskId + " Task deleted successfully!");
+        while (taskId != -1) {
+            if (dao.deleteTask(taskId)) {
+                System.out.println("No. " + taskId + " Task deleted successfully!");
             } else {
                 System.out.println("Task not found.");
             }
 
             System.out.println("The following are your current tasks:");
-            ShowTask();
+            showTasks();
 
             System.out.println("Please enter the task ID of the task you want to delete:");
             System.out.println("Type \"-1\" if you have finished deleting tasks.");
-            TaskId = UserInput.nextInt();
-            UserInput.nextLine();
+            taskId = userInput.nextInt();
+            userInput.nextLine();
         }
-    }
-    
-    public void SearchTask() {
+	}
+	
+	public void searchTask() {
         System.out.println("Please enter a keyword to search for in your daily tasks:");
-        String Keyword = UserInput.nextLine();
+        String keyword = userInput.nextLine();
         boolean found = false;
 
-        task[] tasks = Dao.GetTasks();
+        task[] tasks = dao.getTasks();
         for (task t : tasks) {
-            if (t.GetTaskTitle().contains(Keyword) || t.GetTaskText().contains(Keyword)) {
-                System.out.println("Task Found. No. " + t.GetTaskId() + " Task: " + t.GetTaskTitle());
+            if (t.getTaskTitle().contains(keyword) || t.getTaskText().contains(keyword)) {
+                System.out.println("Task Found. No. " + t.getTaskId() + " Task: " + t.getTaskTitle());
                 found = true;
             }
         }
 
         if (!found) {
-            System.out.println("No tasks found containing the keyword: " + Keyword);
+            System.out.println("No tasks found containing the keyword: " + keyword);
         }
     }
-    
-    public void ReorderTask() {
+	
+	public void reorderTask() {
         System.out.println("Would you like to see all the tasks in increasing or decreasing order?");
         System.out.println("Please press 1 for increasing order. Press 2 for decreasing order.");
-        int Order = UserInput.nextInt();
-        UserInput.nextLine();
+        int order = userInput.nextInt();
+        userInput.nextLine();
         
-        task[] tasks = Dao.GetTasks();
+        task[] tasks = dao.getTasks();
         Arrays.sort(tasks, new Comparator<task>() {
             @Override
             public int compare(task t1, task t2) {
-                return t1.GetTaskTitle().compareToIgnoreCase(t2.GetTaskTitle());
+                return t1.getTaskTitle().compareToIgnoreCase(t2.getTaskTitle());
             }
         });
         
-        if (Order == 1) {
+        if (order == 1) {
             System.out.println("Tasks in increasing order:");
             for (task t : tasks) {
-                System.out.println("ID: " + t.GetTaskId() + " " + t.GetTaskTitle());
+                System.out.println("ID: " + t.getTaskId() + " " + t.getTaskTitle());
             }
-        } else if (Order == 2) {
+        } else if (order == 2) {
             System.out.println("Tasks in decreasing order:");
             for (int i = tasks.length - 1; i >= 0; i--) {
-                System.out.println("ID: " + tasks[i].GetTaskId() + " " + tasks[i].GetTaskTitle());
+                System.out.println("ID: " + tasks[i].getTaskId() + " " + tasks[i].getTaskTitle());
             }
         } else {
             System.out.println("Invalid input. Please press 1 for increasing order or 2 for decreasing order.");
         }
-    }
-    
-    public void checkRepeated() {
-        boolean[] Repeated = new boolean[Dao.GetTasks().length];
+	}
+	
+	public void checkRepeated() {
+        boolean[] repeated = new boolean[dao.getTasks().length];
         String repeat = "";
-        task[] tasks = Dao.GetTasks();
+        task[] tasks = dao.getTasks();
         
         for (int i = 0; i < tasks.length; i++) {
-            if (Repeated[i]) {
+            if (repeated[i]) {
                 continue;
             }
             for (int j = i + 1; j < tasks.length; j++) {
-                if (tasks[i].GetTaskTitle().equals(tasks[j].GetTaskTitle())) {
-                    Repeated[j] = true;
-                    if (!repeat.contains(tasks[i].GetTaskTitle())) {
-                        repeat = repeat + tasks[i].GetTaskTitle() + ".";
+                if (tasks[i].getTaskTitle().equals(tasks[j].getTaskTitle())) {
+                    repeated[j] = true;
+                    if (!repeat.contains(tasks[i].getTaskTitle())) {
+                        repeat = repeat + tasks[i].getTaskTitle() + ".";
                     }
                 }
             }
@@ -204,5 +203,7 @@ public class taskservice {
         } else {
             System.out.println("No repeated tasks found.");
         }
-    }
+	}
 }
+
+
