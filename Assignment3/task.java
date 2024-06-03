@@ -1,51 +1,51 @@
 package Assignment3;
 
 public class task {
-    
-    private int TaskId;
-    private String TaskTitle;
-    private String TaskText;
-    private String assignedTo;
-    
-    public task() {}
-    
-    public task(int TaskId, String TaskTitle, String TaskText, String assignedTo) {
-        this.TaskId = TaskId;
-        this.TaskTitle = TaskTitle;
-        this.TaskText = TaskText;
-        this.assignedTo = assignedTo;
-    }
-    
-    public int GetTaskId() {
-        return TaskId; 
-    }
-    
-    public void SetTaskId(int TaskId) {
-        this.TaskId = TaskId;
-    }
-    
-    public String GetTaskTitle() {
-        return TaskTitle;
-    }
-    
-    public void SetTaskTitle(String TaskTitle) {
-        this.TaskTitle = TaskTitle;
-    }
-    
-    public String GetTaskText() {
-        return TaskText;
-    }
-    
-    public void SetTaskText(String TaskText) {
-        this.TaskText = TaskText;
-    } 
-    
-    public String GetassignedTo() {
-        return assignedTo;
-    }
-    
-    public void SetassignedTo(String assignedTo) {
-        this.assignedTo = assignedTo;
-    }
-    
+		
+	private int taskId;
+	private String taskTitle;
+	private String taskText;
+	private String assignedTo;
+		
+	public task() {}
+		
+	public task(int taskId, String taskTitle, String taskText, String assignedTo) {
+		this.taskId = taskId;
+		this.taskTitle = taskTitle;
+		this.taskText = taskText;
+		this.assignedTo = assignedTo;
+	}
+		
+	public int getTaskId() {
+		return taskId; 
+	}
+		
+	public void setTaskId(int taskId) {
+		this.taskId = taskId;
+	}
+		
+	public String getTaskTitle() {
+		return taskTitle;
+	}
+		
+	public void setTaskTitle(String taskTitle) {
+		this.taskTitle = taskTitle;
+	}
+		
+	public String getTaskText() {
+		return taskText;
+	}
+		
+	public void setTaskText(String taskText) {
+		this.taskText = taskText;
+	} 
+		
+	public String getAssignedTo() {
+		return assignedTo;
+	}
+		
+	public void setAssignedTo(String assignedTo) {
+		this.assignedTo = assignedTo;
+	}
 }
+
