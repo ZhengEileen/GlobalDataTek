@@ -3,29 +3,29 @@ package Assignment3;
 import java.util.Random;
 
 public class daotask {
-	
+    
     private task[] Tasks;
     private boolean[] UsedIds;
     private int TaskCount;
     
     public daotask(int size) {
-    	Tasks = new task[size];
-    	UsedIds = new boolean[1000];
-    	TaskCount = 0;
+        Tasks = new task[size];
+        UsedIds = new boolean[1000];
+        TaskCount = 0;
     }
     
     private int GenerateTaskId() {
-    	Random RandomNum = new Random();
-    	int TaskId = 100 + RandomNum.nextInt(900);
-    	while (UsedIds[TaskId]) {
-    		TaskId = 100 + RandomNum.nextInt(900);
-    	}
-    	UsedIds[TaskId] = true;
-    	return TaskId;
+        Random RandomNum = new Random();
+        int TaskId = 100 + RandomNum.nextInt(900);
+        while (UsedIds[TaskId]) {
+            TaskId = 100 + RandomNum.nextInt(900);
+        }
+        UsedIds[TaskId] = true;
+        return TaskId;
     }
     
     public void AddTask(String TaskTitle, String TaskText, String assignedTo) {
-    	if (TaskCount >= Tasks.length) {
+        if (TaskCount >= Tasks.length) {
             System.out.println("Task list is full.");
             return;
         }
@@ -53,9 +53,9 @@ public class daotask {
     public boolean UpdateTask(int TaskId, String TaskTitle, String TaskText, String assignedTo) {
         task UpdateTask = GetTaskById(TaskId);
         if (UpdateTask != null) {
-        	UpdateTask.SetTaskTitle(TaskTitle);
-        	UpdateTask.SetTaskText(TaskText);
-        	UpdateTask.SetassignedTo(assignedTo);
+            UpdateTask.SetTaskTitle(TaskTitle);
+            UpdateTask.SetTaskText(TaskText);
+            UpdateTask.SetassignedTo(assignedTo);
             return true;
         }
         return false;
@@ -64,7 +64,7 @@ public class daotask {
     public boolean DeleteTask(int TaskId) {
         for (int i = 0; i < TaskCount; i++) {
             if (Tasks[i].GetTaskId() == TaskId) {
-            	UsedIds[TaskId] = false;
+                UsedIds[TaskId] = false;
                 Tasks[i] = Tasks[--TaskCount]; 
                 Tasks[TaskCount] = null; 
                 return true;
