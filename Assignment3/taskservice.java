@@ -5,48 +5,48 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 public class taskservice {
-	
-	private Scanner UserInput;
+    
+    private Scanner UserInput;
     private daotask Dao;
     
     public taskservice(int size) {
-    	UserInput = new Scanner(System.in);
-    	Dao = new daotask(size);
+        UserInput = new Scanner(System.in);
+        Dao = new daotask(size);
     }
-	
-	public void Greeting() {
+    
+    public void Greeting() {
         System.out.println("Hi, Please enter your name:");
         String UserName = UserInput.nextLine();
         System.out.println("Hi " + UserName + " :)");
-	}
-	
-	public int NumberTasks() {
+    }
+    
+    public int NumberTasks() {
         System.out.println("How many tasks would you like to accomplish today?");
         int Number = UserInput.nextInt();
         UserInput.nextLine();
         return Number;
     }
-	
-	public String[] GetTask(int NumberTasks) {
+    
+    public String[] GetTask(int NumberTasks) {
         System.out.println("Please type your " + NumberTasks + " tasks for today, each task should end with a period:");
         String temp = UserInput.nextLine();
         String[] tasks = temp.split("\\.");
         return tasks;
     }
-	
-	private void ShowTask() {
+    
+    private void ShowTask() {
         task[] tasks = Dao.GetTasks();
-		for (task t : tasks) {
+        for (task t : tasks) {
             System.out.println("ID: " + t.GetTaskId() + " " + t.GetTaskTitle());
         }
-	}
-	
-	private task GetTaskById(int TaskId) {
+    }
+    
+    private task GetTaskById(int TaskId) {
         return Dao.GetTaskById(TaskId);
     }
-	
-	public void AddTask() {
-		System.out.println("Would you like to add a new task to your daily tasks?");
+    
+    public void AddTask() {
+        System.out.println("Would you like to add a new task to your daily tasks?");
         System.out.println("Type \"yes\" or \"Yes\" if you want to.");
         System.out.println("Type \"finish\" or \"Finish\" if you have finished adding your tasks.");
         String UserDecision = UserInput.nextLine();
@@ -71,8 +71,8 @@ public class taskservice {
             }
         }
     }
-	
-	public void UpdateTask() {
+    
+    public void UpdateTask() {
         System.out.println("The following are your current tasks:");
         ShowTask();
 
@@ -105,8 +105,8 @@ public class taskservice {
             UserInput.nextLine();
         }
     }
-	
-	public void DeleteTask() {
+    
+    public void DeleteTask() {
         System.out.println("The following are your current tasks:");
         ShowTask();
         
@@ -130,9 +130,9 @@ public class taskservice {
             TaskId = UserInput.nextInt();
             UserInput.nextLine();
         }
-	}
-	
-	public void SearchTask() {
+    }
+    
+    public void SearchTask() {
         System.out.println("Please enter a keyword to search for in your daily tasks:");
         String Keyword = UserInput.nextLine();
         boolean found = false;
@@ -149,8 +149,8 @@ public class taskservice {
             System.out.println("No tasks found containing the keyword: " + Keyword);
         }
     }
-	
-	public void ReorderTask() {
+    
+    public void ReorderTask() {
         System.out.println("Would you like to see all the tasks in increasing or decreasing order?");
         System.out.println("Please press 1 for increasing order. Press 2 for decreasing order.");
         int Order = UserInput.nextInt();
@@ -177,9 +177,9 @@ public class taskservice {
         } else {
             System.out.println("Invalid input. Please press 1 for increasing order or 2 for decreasing order.");
         }
-	}
-	
-	public void checkRepeated() {
+    }
+    
+    public void checkRepeated() {
         boolean[] Repeated = new boolean[Dao.GetTasks().length];
         String repeat = "";
         task[] tasks = Dao.GetTasks();
@@ -203,5 +203,5 @@ public class taskservice {
         } else {
             System.out.println("No repeated tasks found.");
         }
-	}
+    }
 }
