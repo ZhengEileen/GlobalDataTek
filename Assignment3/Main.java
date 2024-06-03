@@ -3,10 +3,10 @@ package Assignment3;
 import java.util.Scanner;
 
 public class Main {
-	
-	public static void main(String[] args) {
-	
-	Scanner UserInput = new Scanner(System.in);
+    
+    public static void main(String[] args) {
+    
+        Scanner UserInput = new Scanner(System.in);
         taskservice taskService = new taskservice(100);
         
         taskService.Greeting();
@@ -29,25 +29,24 @@ public class Main {
             UserInput.nextLine(); 
 
             if (OptionChoice == 1) {
-            	taskService.AddTask();
+                taskService.AddTask();
             } else if (OptionChoice == 2) {
                 taskService.UpdateTask();
             } else if (OptionChoice == 3) {
                 taskService.DeleteTask();
             } else if (OptionChoice == 4) {
-            	taskService.SearchTask();
+                taskService.SearchTask();
             } else if (OptionChoice == 5) {
-            	taskService.ReorderTask();
+                taskService.ReorderTask();
             } else if (OptionChoice == 6) {
-            	taskService.checkRepeated();
+                taskService.checkRepeated();
             } else if (OptionChoice != 0) {
-            	System.out.println("Invalid option number, please try again.");
+                System.out.println("Invalid option number, please try again.");
             }
 
         }
         System.out.println("Bye Bye.");
 
         UserInput.close();
-	}
-
+    }
 }
