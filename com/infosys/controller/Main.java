@@ -16,7 +16,7 @@ public class Main {
 
         User user = new User();
 
-        while (true) { // Start of the loop to allow continuous login
+        while (true) { // continuous login
             user = userService.register();
 
             if (user == null) {
