@@ -32,7 +32,7 @@ public class TaskDao {
             return;
         }
         int taskId = generateTaskId();
-        Task newTask = new Task(taskId, taskTitle, taskText, assignedTo, false); // Ensured proper initialization of isCompleted
+        Task newTask = new Task(taskId, taskTitle, taskText, assignedTo, false); 
         tasks[taskCount++] = newTask;
         System.out.println("Task added successfully with ID: " + taskId);
     }
