@@ -1,12 +1,45 @@
 package com.infosys.dao;
 
 import com.infosys.pojo.User;
+<<<<<<< HEAD
+import com.infosys.exception.UserLimitException;
+=======
+>>>>>>> 889d62ab8b34eaf3a3c91ab47d7270522fcc4c8d
 
 public class UserDao {
 
     private User[] users;
     private int userCount;
 
+<<<<<<< HEAD
+    public UserDao() {
+        users = new User[10];
+        userCount = 0;
+    }
+
+    public void addUser(User user) throws UserLimitException {
+        if (userCount >= users.length) {
+            throw new UserLimitException("User limit exceeded. Cannot add more users.");
+        } else {
+            users[userCount++] = user;
+        }
+    }
+
+    public User getUser(String userName) {
+        for (User value : users) {
+            if (value != null && value.getUserName().equals(userName)) {
+                return value;
+            }
+        }
+        return null;
+    }
+
+    public void updateUser(User newUser) {
+        for (int i = 0; i < userCount; i++) {
+            if (users[i].getUserName().equals(newUser.getUserName())) {
+                users[i] = newUser;
+                break;
+=======
     // Default constructor with default size 100
     public UserDao() {
         int size = 100; // Set default size to 100
@@ -46,10 +79,30 @@ public class UserDao {
             if (users[i].getUserName().equals(newUser.getUserName())) { // Check if the username matches
                 users[i] = newUser; // Update the user with the new user
                 break; // Exit the loop after updating
+>>>>>>> 889d62ab8b34eaf3a3c91ab47d7270522fcc4c8d
             }
         }
     }
 
+<<<<<<< HEAD
+    public void deleteUser(User oldUser) {
+        for (int i = 0; i < userCount; i++) {
+            if (users[i].getUserName().equals(oldUser.getUserName())) {
+                for (int j = i; j < userCount - 1; j++) {
+                    users[j] = users[j + 1];
+                }
+                users[userCount - 1] = null;
+                userCount--;
+                break;
+            }
+        }
+    }
+    
+    public int getUserCount() {
+        return userCount;
+    }
+}
+=======
     // Method to delete a user
     public void deleteUser(User oldUser) {
         for (int i = 0; i < userCount; i++) { // Iterate over the users array
@@ -65,3 +118,4 @@ public class UserDao {
     }
 }
 
+>>>>>>> 889d62ab8b34eaf3a3c91ab47d7270522fcc4c8d
