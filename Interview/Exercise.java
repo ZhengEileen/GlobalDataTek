@@ -4,13 +4,11 @@ public class Exercise {
 
 	public int PrefixSuffix(String str) {
 		int size = str.length();
-
 		if (size < 2) {
 			return 0;
 		}
-
+		
 		int length = 0;
-
 		for (int i = 0; i < size / 2; i++) {
 			boolean Matching = true;
 			int firstHalf = 0;
