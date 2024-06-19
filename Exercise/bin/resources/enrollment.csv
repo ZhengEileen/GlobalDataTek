@@ -1,0 +1,12 @@
+User Id,First Name,Last Name,Version,Insurance Company
+1,John,Doe,1,InsuranceA
+2,Jane,Smith,2,InsuranceB
+3,Alice,Johnson,1,InsuranceA
+1,John,Doe,2,InsuranceA
+4,Bob,Brown,1,InsuranceB
+5,Charlie,Clark,3,InsuranceA
+3,Alice,Johnson,3,InsuranceA
+6,Eve,White,1,InsuranceB
+7,Frank,Black,2,InsuranceA
+2,Jane,Smith,3,InsuranceB
+8,Jane,Smith,3,InsuranceC
