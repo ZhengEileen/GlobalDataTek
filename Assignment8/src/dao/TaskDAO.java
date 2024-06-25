@@ -8,40 +8,47 @@ public class TaskDAO {
 
 	private List<Task> tasks = new ArrayList<>();
 
-	// Create
 	public void addTask(Task task) {
 		tasks.add(task);
 	}
 
-	// Read
 	public Task findTask(int taskId) {
+		Task findTask = null;
 		for (Task task : tasks) {
 			if (task.getTaskId() == taskId) {
-				return task;
+				findTask = task;
 			}
 		}
-		return null;
+		return findTask;
 	}
 
-	// Update
+	public List<Task> getAllTasks() {
+		List<Task> allTasks = new ArrayList<>();
+		for (Task task : tasks) {
+			allTasks.add(task);
+		}
+		return allTasks;
+	}
+
 	public boolean updateTask(Task updatedTask) {
+		boolean isUpdate = false;
 		for (int i = 0; i < tasks.size(); i++) {
 			if (tasks.get(i).getTaskId() == updatedTask.getTaskId()) {
 				tasks.set(i, updatedTask);
-				return true;
+				isUpdate = true;
 			}
 		}
-		return false;
+		return isUpdate;
 	}
 
-	// Delete
 	public boolean deleteTask(int taskId) {
+		boolean isDelete = false;
 		for (int i = 0; i < tasks.size(); i++) {
 			if (tasks.get(i).getTaskId() == taskId) {
 				tasks.remove(i);
-				return true;
+				isDelete = true;
 			}
 		}
-		return false;
+		return isDelete;
 	}
 }

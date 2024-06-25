@@ -1,91 +1,220 @@
 package service;
 
-import java.util.Scanner;
-import dao.TaskDAO;
 import pojo.Task;
+import dao.TaskDAO;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Scanner;
 
 public class TaskService {
 
-	private TaskDAO taskDAO = new TaskDAO();
-	private Scanner sc = new Scanner(System.in);
+	private TaskDAO taskDAO;
 
-	// Save Task
-	public void saveTask() {
-		System.out.println("Enter the Task Id:");
-		int taskId = sc.nextInt();
-		sc.nextLine();
+	public TaskService(TaskDAO taskDAO) {
+		this.taskDAO = taskDAO;
+	}
 
-		System.out.println("Enter the Task Name:");
-		String taskName = sc.nextLine();
+	public void addTask() {
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Please enter the task ID:");
+		int taskId = scanner.nextInt();
+		scanner.nextLine();
+		System.out.println("Please enter the task title:");
+		String taskTitle = scanner.nextLine();
+		System.out.println("Please enter the task text:");
+		String taskText = scanner.nextLine();
+		System.out.println("Please enter the assignee:");
+		String assignedTo = scanner.nextLine();
 
-		System.out.println("Enter the Labour Amount:");
-		int labourAmount = sc.nextInt();
-
-		Task task = new Task(taskId, taskName, labourAmount);
+		Task task = new Task(taskId, taskTitle, taskText, assignedTo, false);
 		taskDAO.addTask(task);
-		System.out.println("Task added successfully.");
+		System.out.println("Task has been added successfully.");
 	}
 
-	// Delete Task
-	public void deleteTask() {
-		System.out.println("Enter the Task Id to delete the Task:");
-		int deleteTaskId = sc.nextInt();
-
-		Task task = taskDAO.findTask(deleteTaskId);
-
-		if (task != null) {
-			if (task.getLabourAmount() > 100 && task.getTaskId() > 101) {
-				boolean deleteStatus = taskDAO.deleteTask(deleteTaskId);
-				if (deleteStatus) {
-					System.out.println("Deleted Successfully...");
-				} else {
-					System.out.println("Task deletion failed...");
-				}
-			} else {
-				System.out.println("Task cannot be deleted due to business rules...");
-			}
-		} else {
-			System.out.println("Could not find the Task by the Task Id provided...");
-		}
-	}
-
-	// Update Task
-	public void updateTask() {
-		System.out.println("Enter the Task Id to update the Task:");
-		int taskId = sc.nextInt();
-		sc.nextLine(); // Consume newline
-
-		Task existingTask = taskDAO.findTask(taskId);
-		if (existingTask != null) {
-			System.out.println("Enter the new Task Name:");
-			String taskName = sc.nextLine();
-
-			System.out.println("Enter the new Labour Amount:");
-			int labourAmount = sc.nextInt();
-
-			Task updatedTask = new Task(taskId, taskName, labourAmount);
-			boolean updateStatus = taskDAO.updateTask(updatedTask);
-
-			if (updateStatus) {
-				System.out.println("Task updated successfully.");
-			} else {
-				System.out.println("Task update failed.");
-			}
-		} else {
-			System.out.println("Could not find the Task by the Task Id provided...");
-		}
-	}
-
-	// Find Task
 	public void findTask() {
-		System.out.println("Enter the Task Id to find the Task:");
-		int taskId = sc.nextInt();
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Please enter the task ID to search for:");
+		int taskId = scanner.nextInt();
 
 		Task task = taskDAO.findTask(taskId);
 		if (task != null) {
-			System.out.println("Task found: " + task);
+			System.out.println("The task has been found: " + taskToString(task));
 		} else {
-			System.out.println("Could not find the Task by the Task Id provided...");
+			System.out.println("Unfortunately, the task could not be found.");
 		}
 	}
+
+	public void updateTask() {
+		showAllTasks();
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Please enter the task ID to update:");
+		int taskId = scanner.nextInt();
+		scanner.nextLine();
+		System.out.println("Please enter the new task title:");
+		String taskTitle = scanner.nextLine();
+		System.out.println("Please enter the new task text:");
+		String taskText = scanner.nextLine();
+		System.out.println("Please enter the new assignee:");
+		String assignedTo = scanner.nextLine();
+
+		Task updatedTask = new Task(taskId, taskTitle, taskText, assignedTo, false);
+		boolean success = taskDAO.updateTask(updatedTask);
+
+		if (success) {
+			System.out.println("The task has been updated successfully.");
+		} else {
+			System.out.println("The task update failed.");
+		}
+	}
+
+	public void deleteTask() {
+		showAllTasks();
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Please enter the task ID you want to delete:");
+		int taskId = scanner.nextInt();
+
+		boolean success = taskDAO.deleteTask(taskId);
+		if (success) {
+			System.out.println("The task has been deleted successfully.");
+		} else {
+			System.out.println("The task deletion failed.");
+		}
+	}
+
+	public void searchTask() {
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Please enter the text to search for in tasks:");
+		String searchText = scanner.nextLine();
+
+		List<Task> result = new ArrayList<>();
+		for (Task task : taskDAO.getAllTasks()) {
+			if (task.getTaskTitle().contains(searchText) || task.getTaskText().contains(searchText)) {
+				result.add(task);
+			}
+		}
+
+		System.out.println("Search results:");
+		for (Task task : result) {
+			System.out.println(taskToString(task));
+		}
+	}
+
+	public void assignTask() {
+		showAllTasks();
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Please enter the task ID you want to assign:");
+		int taskId = scanner.nextInt();
+		scanner.nextLine();
+		System.out.println("Please enter the assignee username:");
+		String assignedTo = scanner.nextLine();
+
+		Task task = taskDAO.findTask(taskId);
+		if (task != null) {
+			task.setAssignedTo(assignedTo);
+			taskDAO.updateTask(task);
+			System.out.println("The task has been assigned successfully.");
+		} else {
+			System.out.println("Unfortunately, the task could not be found.");
+		}
+	}
+
+	public void arrangeTasks(int order, String username) {
+		List<Task> tasks = new ArrayList<>(taskDAO.getAllTasks());
+		if (username != null) {
+			tasks.removeIf(task -> !task.getAssignedTo().equals(username));
+		}
+
+		if (order == 1) {
+			tasks.sort(Comparator.comparingInt(Task::getTaskId));
+			System.out.println("Tasks arranged in increasing order:");
+		} else {
+			tasks.sort(Comparator.comparingInt(Task::getTaskId).reversed());
+			System.out.println("Tasks arranged in decreasing order:");
+		}
+
+		for (Task task : tasks) {
+			System.out.println(taskToString(task));
+		}
+	}
+
+	public void markTask(String username) {
+		assignedTo(username);
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Please enter the task ID to mark as complete:");
+		int taskId = scanner.nextInt();
+
+		Task task = taskDAO.findTask(taskId);
+		if (task != null) {
+			task.setComplete(true);
+			taskDAO.updateTask(task);
+			System.out.println("The task has been marked as complete.");
+		} else {
+			System.out.println("Unfortunately, the task could not be found.");
+		}
+	}
+
+	public void getCompletionTask(String username) {
+		List<Task> result = new ArrayList<>();
+		for (Task task : taskDAO.getAllTasks()) {
+			if (task.isComplete() && task.getAssignedTo().equals(username)) {
+				result.add(task);
+			}
+		}
+
+		System.out.println("Completed tasks:");
+		for (Task task : result) {
+			System.out.println(taskToString(task));
+		}
+	}
+
+	public void getIncompleteTask(String username) {
+		List<Task> result = new ArrayList<>();
+		for (Task task : taskDAO.getAllTasks()) {
+			if (!task.isComplete() && task.getAssignedTo().equals(username)) {
+				result.add(task);
+			}
+		}
+
+		System.out.println("Incomplete tasks:");
+		for (Task task : result) {
+			System.out.println(taskToString(task));
+		}
+	}
+
+	public void assignedTo(String username) {
+		List<Task> result = new ArrayList<>();
+		for (Task task : taskDAO.getAllTasks()) {
+			if (task.getAssignedTo().equals(username)) {
+				result.add(task);
+			}
+		}
+
+		if (result.isEmpty()) {
+			System.out.println("Invalid username. No tasks assigned to " + username + ".");
+		} else {
+			System.out.println("Tasks assigned to you (" + username + "):");
+			for (Task task : result) {
+				System.out.println(taskToString(task));
+			}
+		}
+	}
+
+	public void showAllTasks() {
+		List<Task> tasks = taskDAO.getAllTasks();
+		System.out.println("Listed below are your current tasks:");
+		for (Task task : tasks) {
+			System.out.println(taskToString(task));
+		}
+	}
+
+	private String taskToString(Task task) {
+		return "Task ID: " + task.getTaskId() + ", Title: " + task.getTaskTitle() + ", Text: " + task.getTaskText()
+				+ ", Assigned To: " + task.getAssignedTo() + ", Completed: " + (task.isComplete() ? "Yes" : "No");
+	}
 }
+
+
+
+

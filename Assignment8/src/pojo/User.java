@@ -2,19 +2,24 @@ package pojo;
 
 public class User {
 
+	private int userId;
 	private String username;
 	private String password;
-	private String name;
 	private String role;
 
-	public User() {
-	}
-
-	public User(String username, String password, String name, String role) {
+	public User(int userId, String username, String password, String role) {
+		this.userId = userId;
 		this.username = username;
 		this.password = password;
-		this.name = name;
 		this.role = role;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
 	public String getUsername() {
@@ -33,14 +38,6 @@ public class User {
 		this.password = password;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public String getRole() {
 		return role;
 	}
@@ -48,4 +45,5 @@ public class User {
 	public void setRole(String role) {
 		this.role = role;
 	}
+
 }

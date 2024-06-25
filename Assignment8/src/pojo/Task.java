@@ -3,21 +3,17 @@ package pojo;
 public class Task {
 
 	private int taskId;
-	private String taskName;
-	private int labourAmount;
+	private String TaskTitle;
+	private String TaskText;
+	private String assignedTo;
+	private boolean isComplete;
 
-	public Task() {
-	}
-
-	public Task(int taskId, String taskName) {
+	public Task(int taskId, String TaskTitle, String TaskText, String assignedTo, boolean isComplete) {
 		this.taskId = taskId;
-		this.taskName = taskName;
-	}
-
-	public Task(int taskId, String taskName, int labourAmount) {
-		this.taskId = taskId;
-		this.taskName = taskName;
-		this.labourAmount = labourAmount;
+		this.TaskTitle = TaskTitle;
+		this.TaskText = TaskText;
+		this.assignedTo = assignedTo;
+		this.isComplete = isComplete;
 	}
 
 	public int getTaskId() {
@@ -28,19 +24,36 @@ public class Task {
 		this.taskId = taskId;
 	}
 
-	public String getTaskName() {
-		return taskName;
+	public String getTaskTitle() {
+		return TaskTitle;
 	}
 
-	public void setTaskName(String taskName) {
-		this.taskName = taskName;
+	public void setTaskTitle(String taskTitle) {
+		TaskTitle = taskTitle;
 	}
 
-	public int getLabourAmount() {
-		return labourAmount;
+	public String getTaskText() {
+		return TaskText;
 	}
 
-	public void setLabourAmount(int labourAmount) {
-		this.labourAmount = labourAmount;
+	public void setTaskText(String taskText) {
+		TaskText = taskText;
 	}
+
+	public String getAssignedTo() {
+		return assignedTo;
+	}
+
+	public void setAssignedTo(String assignedTo) {
+		this.assignedTo = assignedTo;
+	}
+
+	public boolean isComplete() {
+		return isComplete;
+	}
+
+	public void setComplete(boolean isComplete) {
+		this.isComplete = isComplete;
+	}
+
 }
